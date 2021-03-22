@@ -1,5 +1,6 @@
 import cv2, time, json
 import mediapipe as mp
+from PyQt5.QtWidgets import *
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -8,16 +9,16 @@ mp_holistic = mp.solutions.holistic
 
 class MotionData:
     # 손(손가락) + 포즈 + 얼굴 트래킹
-    def get_holistic_data(self, file_name, save_name):
+    def getHolisticData(self, file_path):
         # 캡쳐 횟수 조절
         prev_time = 0
         fps = 5
         count = 0
 
         # 파일 경로 설정
-        video_path = 'D:/sign_language_video/'
-        file_path = video_path + file_name
-        save_path = './motion_data_file/' + save_name
+        file_name = file_path.split('/')[2]
+        save_path = './motion_data_file/' + file_name.replace('.avi', '')
+        print(save_path)
 
         # OpenCV로 읽고 json 파일 생성
         cap = cv2.VideoCapture(file_path)
@@ -30,7 +31,7 @@ class MotionData:
 
         # 간단한 비디오 정보
         print("\n# Video Information")
-        print("Sign Language Name: " + save_name)
+        print("Sign Language Name: " + file_name)
         print("Video Path : " + file_path)
         print("Video Width: " + str(width))
         print("Video Height: " + str(height) + '\n')
